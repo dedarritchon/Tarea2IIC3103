@@ -5,13 +5,13 @@ from django.db import models
 
 class Hamburguesa(models.Model):
 
-    name = models.CharField(max_length=100)
-    price = models.IntegerField(default=0)
-    description = models.CharField(max_length=255)
-    image = models.URLField(max_length=255)
+    nombre = models.CharField(max_length=100)
+    precio = models.IntegerField(default=0)
+    descripcion = models.CharField(max_length=255)
+    imagen = models.URLField(max_length=255)
 
 class Ingrediente(models.Model):
 
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=255)
+    nombre = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=255)
 

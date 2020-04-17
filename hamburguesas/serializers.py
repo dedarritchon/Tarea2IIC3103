@@ -5,10 +5,10 @@ from .models import Hamburguesa, Ingrediente
 class HamburguesaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hamburguesa
-        fields = ('id', 'name', 'price', 'description', 'image')
+        fields = ('id', 'nombre', 'precio', 'descripcion', 'imagen')
 
 class IngredienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingrediente
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'nombre', 'descripcion')
 
