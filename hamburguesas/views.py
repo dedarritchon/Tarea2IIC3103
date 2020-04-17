@@ -15,9 +15,6 @@ class JSONResponse(HttpResponse):
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
-
-
-
 def index(request):
     return render(request, 'hamburguesas/index.html', status=404)
 
@@ -65,4 +62,50 @@ def hamburguesa_detail(request, pk):
 
     elif request.method == 'DELETE':
         hamburguesa.delete()
+        return HttpResponse(status=204)
+
+
+@csrf_exempt
+def ingrediente_list(request):
+    """
+    List all code serie, or create a new serie.
+    """
+    if request.method == 'GET':
+        ingredientes = Ingrediente.objects.all()
+        serializer = IngredienteSerializer(ingredientes, many=True)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = IngredienteSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+        return JSONResponse(serializer.errors, status=400)
+
+
+@csrf_exempt
+def ingrediente_detail(request, pk):
+    """
+    Retrieve, update or delete a serie.
+    """
+    try:
+        ingrediente = Ingrediente.objects.get(pk=pk)
+    except Ingrediente.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = IngredienteSerializer(ingrediente)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = IngredienteSerializer(ingrediente, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data)
+        return JSONResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        ingrediente.delete()
         return HttpResponse(status=204)
