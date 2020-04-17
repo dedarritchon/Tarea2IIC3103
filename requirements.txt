@@ -1,0 +1,11 @@
+django
+datetime
+requests
+bootstrap4
+gunicorn
+dj-database-url
+whitenoise
+psycopg2
+django-bootstrap4
+djangorestframework
+
