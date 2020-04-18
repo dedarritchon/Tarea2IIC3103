@@ -5,7 +5,7 @@ from .models import Hamburguesa, Ingrediente
 class HamburguesaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hamburguesa
-        fields = ('id', 'nombre', 'precio', 'descripcion', 'imagen')
+        fields = ('id', 'nombre', 'precio', 'descripcion', 'imagen', 'ingredientes')
 
 class IngredienteSerializer(serializers.ModelSerializer):
     class Meta:

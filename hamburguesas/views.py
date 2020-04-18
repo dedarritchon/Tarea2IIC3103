@@ -52,7 +52,7 @@ def hamburguesa_detail(request, pk):
         serializer = HamburguesaSerializer(hamburguesa)
         return JSONResponse(serializer.data)
 
-    elif request.method == 'PUT':
+    elif request.method == 'PATCH':
         data = JSONParser().parse(request)
         serializer = HamburguesaSerializer(hamburguesa, data=data)
         if serializer.is_valid():
@@ -98,14 +98,37 @@ def ingrediente_detail(request, pk):
         serializer = IngredienteSerializer(ingrediente)
         return JSONResponse(serializer.data)
 
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = IngredienteSerializer(ingrediente, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JSONResponse(serializer.data)
-        return JSONResponse(serializer.errors, status=400)
-
     elif request.method == 'DELETE':
         ingrediente.delete()
         return HttpResponse(status=204)
+
+
+@csrf_exempt
+def hamburguesa_edit(request, h_pk, i_pk):
+    """
+    Edit hamburguer
+    """
+    try:
+        ingrediente = Ingrediente.objects.get(pk=i_pk)
+    except Ingrediente.DoesNotExist:
+        return HttpResponse(status=404)
+    
+    try:
+        hamburguesa = Hamburguesa.objects.get(pk=h_pk)
+    except Hamburguesa.DoesNotExist:
+        return HttpResponse(status=400)
+
+    if request.method == 'GET':
+        return HttpResponse(status=404)
+
+
+
+    if request.method == 'PUT':
+        hamburguesa.ingredientes.add(ingrediente)
+        return HttpResponse(status=201)
+
+
+    elif request.method == 'DELETE':
+        hamburguesa.ingredientes.remove(ingrediente)
+        return HttpResponse(status=200)
+
