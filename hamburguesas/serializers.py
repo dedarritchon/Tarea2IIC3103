@@ -18,7 +18,7 @@ class CustomIngredienteSerializer(IngredienteSerializer):
 
 
 class HamburguesaSerializer(serializers.ModelSerializer):
-    ingredientes = CustomIngredienteSerializer(many=True)
+    ingredientes = CustomIngredienteSerializer(many=True, required=False)
     class Meta:
         model = Hamburguesa
         fields = ('id', 'nombre', 'precio', 'descripcion', 'imagen', 'ingredientes')
