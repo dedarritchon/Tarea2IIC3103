@@ -73,7 +73,7 @@ def hamburguesa_detail(request, pk):
         serializer = HamburguesaSerializer(hamburguesa, data=data)
         if serializer.is_valid():
             serializer.save()
-            return JSONResponse(serializer.data)
+            return JSONResponse(serializer.data, status=200)
         return JSONResponse(serializer.errors, status=400)
 
     elif request.method == 'DELETE':
