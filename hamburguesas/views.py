@@ -128,8 +128,13 @@ def ingrediente_detail(request, pk):
         return JSONResponse(serializer.data)
 
     elif request.method == 'DELETE':
+
+        for hamburguesa in Hamburguesa.objects.all():
+            if ingrediente in hamburguesa.ingredientes.all():
+                return HttpResponse(status=409)
+
         ingrediente.delete()
-        return HttpResponse(status=204)
+        return HttpResponse(status=200)
     
 
 
