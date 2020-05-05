@@ -70,7 +70,7 @@ def hamburguesa_detail(request, pk):
         except:
             return HttpResponse(status=400)
         
-        serializer = HamburguesaSerializer(hamburguesa, data=data)
+        serializer = HamburguesaSerializer(hamburguesa, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return JSONResponse(serializer.data, status=200)
